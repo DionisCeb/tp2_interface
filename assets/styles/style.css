@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.page-achat {
+    height: 100vh;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+}
+
+.structure_page {
+    background-color: rgb(221, 221, 221);
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    background-color: rgb(150, 152, 153);
+    display: flex;
+    padding: 30px;
+    min-width: 600px;
+    border-radius: 20px;
+}
+
+form div{
+    display: flex;
+    flex-direction: column;
+}
