@@ -1,0 +1,36 @@
+.choix_magasin select,
+.livraison div:first-child input{
+    width: 40%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+
+.choix_magasin {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.choix_magasin input{
+    width: 50px;
+}
+
+.choix_magasin select{
+    width: 50%;
+}
+
+
+
+.choix_livraison {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.choix_livraison div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

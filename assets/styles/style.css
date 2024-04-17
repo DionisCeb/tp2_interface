@@ -1,3 +1,8 @@
+
+@import "section_comande.css";
+@import "section_personnele.css";
+@import "section_resultats.css";
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +10,7 @@
 
 
 .page-achat {
-    height: 100vh;
+    min-height: 100vh;
     background-color: aliceblue;
     display: flex;
     justify-content: center;
@@ -26,56 +31,13 @@
 }
 
 form{
-    background-color: rgb(150, 152, 153);
     display: flex;
-    flex-direction: column;
     padding: 30px;
     min-width: 600px;
     border-radius: 20px;
-    gap: 10px;
-}
-.informations {
-    display: flex;
-    flex-direction: row;
-}
-
-form input {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
 }
 
 form div{
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-
-.personal, .adresse {
-    width: 50%;
-}
-
-/*footer*/
-
-.footer_form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.footer_form button {
-    width: 100px;
-    padding: 10px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 10,10,10, 0.5 beige;
-    color: white;
-    background-color: gray;
-    box-shadow: 2px 2px 2px rgb(96, 94, 94);
-}
-
-.footer_form button:hover{
-    background-color: rgb(79, 133, 124);
 }
