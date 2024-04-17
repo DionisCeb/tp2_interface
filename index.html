@@ -12,34 +12,76 @@
             <div class="structure_form">
                 <h1>Validation de l'achat</h1>
                 <form id="1" action="">
-                    <div class="personal">
-                        <div>
-                            <label for="nom">Nom complet <span>*</span></label>
-                            <input type="text">
+                    <section>
+                        <h1>Étape 1 - Informations personnelles</h1>
+                        <div class="informations">
+                            <div class="personal">
+                                <div>
+                                    <label for="nom">Nom complet <span>*</span></label>
+                                    <input type="text">
+                                </div>
+                                <div>
+                                    <label for="email">Courriel <span>*</span></label>
+                                    <input type="email">
+                                </div>
+                                <div>
+                                    <label for="telephone">Numero de telephone <span>*</span></label>
+                                    <input type="phone">
+                                </div>
+                            </div>
+                            <div class="adresse">
+                                <div>
+                                    <label for="adresse">Adresse <span>*</span></label>
+                                    <input type="text">
+                                </div>
+                                <div>
+                                    <label for="ville">Ville <span>*</span></label>
+                                    <input type="text">
+                                </div>
+                                <div>
+                                    <label for="ville">Code postal <span>*</span></label>
+                                    <input type="text">
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="email">Courriel <span>*</span></label>
-                            <input type="email">
+                        <div class="footer_form">
+                            <button class="precedent">Precedent</button>
+                            <button class="continuer">Continuer</button>
                         </div>
-                        <div>
-                            <label for="telephone">Numero de telephone <span>*</span></label>
-                            <input type="phone">
+                    </section>
+
+                    <section>
+                        <h1>Étape 2 - Informations de la comande</h1>
+                        <div class="livraison">
+                            <div>
+                                <label for="livraison">Date de livraison <span>*</span></label>
+                                <input type="text">
+                            </div>
+                            <div>
+                                <label for="magasin">Livraison en magasin</label>
+                                <input type="checkbox">
+                                <select name="succursale" id="succursale">
+                                    <option value="Montreal">Succursale Montréal</option>
+                                    <option value="Laval">Succursale Laval</option>
+                                    <option value="Longueuil">Succursale Longueuil</option>
+                                  </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="adresse">
-                        <div>
-                            <label for="adresse">Adresse <span>*</span></label>
-                            <input type="text">
+                        <div class="footer_form">
+                            <button class="precedent">Precedent</button>
+                            <button class="continuer">Continuer</button>
                         </div>
-                        <div>
-                            <label for="ville">Ville <span>*</span></label>
-                            <input type="text">
+                    </section>
+
+                    <section>
+                        <div class="informations">
+
                         </div>
-                        <div>
-                            <label for="ville">Code postal <span>*</span></label>
-                            <input type="text">
+                        <div class="footer_form">
+                            <button class="precedent">Precedent</button>
+                            <button class="continuer">Continuer</button>
                         </div>
-                    </div>
+                    </section>
                 </form>
             </div>
         </div>
