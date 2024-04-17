@@ -32,12 +32,65 @@
 
 form{
     display: flex;
-    padding: 30px;
+    flex-direction: column;
     min-width: 600px;
     border-radius: 20px;
+    gap: 10px;
+}
+
+
+/*SECTIONS*/
+section {
+    background-color: gray;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+
+
+.informations {
+    display: flex;
+    flex-direction: row;
+}
+
+.informations input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
 }
 
 form div{
     display: flex;
     flex-direction: column;
+    gap: 10px;
+}
+
+
+.personal, .adresse {
+    width: 50%;
+}
+
+/*footer*/
+
+.footer_form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.footer_form button {
+    width: 100px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 10,10,10, 0.5 beige;
+    color: white;
+    background-color: rgb(115 110 199);
+    box-shadow: 2px 2px 2px rgb(96, 94, 94);
+}
+
+.footer_form button:hover{
+    background-color: rgb(79, 133, 124);
 }
