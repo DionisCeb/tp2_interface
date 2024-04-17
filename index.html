@@ -59,12 +59,29 @@
                             </div>
                             <div>
                                 <label for="magasin">Livraison en magasin</label>
-                                <input type="checkbox">
-                                <select name="succursale" id="succursale">
-                                    <option value="Montreal">Succursale Montréal</option>
-                                    <option value="Laval">Succursale Laval</option>
-                                    <option value="Longueuil">Succursale Longueuil</option>
-                                  </select>
+                                <div class="choix_magasin">
+                                    <input type="checkbox">
+                                    <select name="succursale" id="succursale">
+                                        <option value="Montreal">Succursale Montréal</option>
+                                        <option value="Laval">Succursale Laval</option>
+                                        <option value="Longueuil">Succursale Longueuil</option>
+                                      </select>
+                                </div>
+                                <label for="service_livraison">Service de livraison</label>
+                                <div class="choix_livraison">
+                                    <div>
+                                        <label for="poste_ca">Poste Canada</label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div>
+                                        <label for="poste_ca">FedEx</label>
+                                        <input type="checkbox">
+                                    </div>
+                                    <div>
+                                        <label for="poste_ca">DHL</label>
+                                        <input type="checkbox">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="footer_form">

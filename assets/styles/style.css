@@ -1,4 +1,8 @@
 
+@import "section_comande.css";
+@import "section_personnele.css";
+@import "section_resultats.css";
+
 * {
     margin: 0;
     padding: 0;
