@@ -13,6 +13,10 @@
     gap: 30px;
 }
 
+.choix_livraison label {
+    font-size: 15px;
+}
+
 .choix_magasin input{
     width: 50px;
 }
@@ -33,4 +37,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.choix_livraison div input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
 }

@@ -1,0 +1,26 @@
+
+section .paiements input{
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+/*  .paiements input[type="text"]:nth-child(-n+2) {
+    width: 400px; 
+} 
+
+  .paiements .expiration_cvc input[type="text"] {
+    width: 60%;
+}   */
+
+ .paiements .expiration_cvc{
+    display: flex;
+    flex-direction: row;
+} 
+
+
+
+
+
