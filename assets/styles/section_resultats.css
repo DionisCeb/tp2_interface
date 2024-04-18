@@ -1,0 +1,13 @@
+.structure_form .confirmation h1 {
+    text-align: start;
+    color: rgb(115 110 199);
+    font-size: 25px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.confirmation p {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}

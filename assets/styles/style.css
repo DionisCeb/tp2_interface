@@ -1,6 +1,7 @@
 
 @import "section_comande.css";
 @import "section_personnele.css";
+@import "section_paiement.css";
 @import "section_resultats.css";
 
 * {
@@ -8,6 +9,32 @@
     padding: 0;
 }
 
+
+
+/*POUR JS*/
+
+/*Pour afficher et masquer la section.*/
+.invisible {
+    display: none;
+}
+
+/*Pour le bouton*/
+.inactif {
+    background-color: lightgray;
+    color: gray;
+    pointer-events: none;
+}
+
+
+
+
+/*Label*/
+
+label {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
 
 .page-achat {
     min-height: 100vh;
@@ -28,6 +55,7 @@
     text-align: center;
     margin-bottom: 20px;
     color: #2522d3;
+    font-size: 30px;
 }
 
 form{
@@ -41,7 +69,7 @@ form{
 
 /*SECTIONS*/
 section {
-    background-color: gray;
+    background-color: #a3c3ba;
     padding: 20px;
     border-radius: 20px;
 }
@@ -79,16 +107,25 @@ form div{
     justify-content: space-between;
 }
 
+/*Structure de chaque bouton*/
 .footer_form button {
     width: 100px;
     padding: 10px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
-    box-shadow: 10,10,10, 0.5 beige;
+    box-shadow: 10,10,10, 0.5 gray;
     color: white;
-    background-color: rgb(115 110 199);
     box-shadow: 2px 2px 2px rgb(96, 94, 94);
+}
+
+/*Les boutons*/
+.continuer{
+    background-color: rgb(115 110 199);
+}
+
+.precedent {
+    background-color: #c7c7c7;
 }
 
 .footer_form button:hover{
