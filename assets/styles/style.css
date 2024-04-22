@@ -15,7 +15,11 @@
 
 /*Pour afficher et masquer la section.*/
 .invisible {
-    display: none;
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
 }
 
 /*Pour le bouton*/

@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle checkbox change for succursale
   checkboxSuccursale.addEventListener("change", function () {
-    handleCheckboxChange(checkboxSuccursale, selectSuccursale, livraisonChoix);
+    handleCheckboxChange(selectSuccursale, livraisonChoix);
   });
 
   // Handle radio button change for livraisonChoix
@@ -69,34 +69,25 @@ function updateResults(formulaire, selectSuccursale) {
   if (selectSuccursale.selectedIndex === 0) {
     // Assuming the first option is the default empty option
     if (succursaleParagraph) {
-      succursaleParagraph.classList.add("invisible");
+      succursaleParagraph.style.display = "none";
     }
   } else {
     if (succursaleParagraph) {
-      succursaleParagraph.classList.remove("invisible");
+      succursaleParagraph.style.display = "block";
     }
   }
 }
 
-function handleCheckboxChange(checkbox, selectSuccursale, livraisonChoix) {
-  const isChecked = checkbox.checked;
-
-  // Reset the selected index of the select element
-  selectSuccursale.selectedIndex = 0;
-
-  // Uncheck all the radio buttons
-  livraisonChoix.forEach(function (radio) {
-    radio.checked = false;
-  });
-
-  // Disable or enable the select element and radio buttons based on the checkbox state
+function handleCheckboxChange(selectSuccursale, livraisonChoix) {
+  const isChecked = checkboxSuccursale.checked;
   selectSuccursale.disabled = !isChecked;
+  selectSuccursale.selectedIndex = -1; // Reset selected index when checkbox is unchecked
+  updateResults(formulaire, selectSuccursale);
+
+  //Disable the radio inputs for livraisonChoix if the checkbox is checked
   livraisonChoix.forEach(function (radio) {
     radio.disabled = isChecked;
   });
-
-  // Update results after clearing the selections
-  updateResults(formulaire, selectSuccursale);
 }
 
 function handleRadioChange(radio) {
@@ -111,16 +102,17 @@ function handleRadioChange(radio) {
   const name = radio.getAttribute("data-name");
   const isChecked = radio.checked;
   const compagnieConfirmation = document.querySelector(
-    "#compagnieConfirmationParagraph"
+    'span[data-name="compagnie_confirmation"]'
   );
 
   if (isChecked) {
-    compagnieConfirmation.textContent = "Par: " + name; // Display the name in confirmation section
-    compagnieConfirmation.classList.remove("invisible");
-    compagnieConfirmation.classList.add("visible");
+    if (compagnieConfirmation) {
+      compagnieConfirmation.textContent = name; // Display the name in confirmation section
+    }
   } else {
-    compagnieConfirmation.textContent = ""; // Clear the text content
-    compagnieConfirmation.classList.remove("visible");
-    compagnieConfirmation.classList.add("invisible");
+    // Optional: Clear the confirmation section if the element is not found
+    if (compagnieConfirmation) {
+      compagnieConfirmation.textContent = "";
+    }
   }
 }
