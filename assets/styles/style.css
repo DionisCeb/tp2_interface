@@ -29,6 +29,20 @@
     pointer-events: none;
 }
 
+s
+/*Validation*/
+/*erreur*/
+.error {
+    border: 3px solid red; 
+    background-color: #b07474; 
+    color: red;
+}
+
+.valid {
+    border: 3px solid rgb(79, 92, 180); 
+    background-color: #58a652; 
+    color: rgb(98, 89, 188);
+}
 
 
 
