@@ -1,20 +1,21 @@
 function init() {
+  //Sélection d'éléments
   const formulaire = document.querySelector("#formulaire-comande");
   const checkboxSuccursale = document.querySelector("#checkboxSuccursale");
   const selectSuccursale = document.querySelector("#succursale");
   const livraisonChoix = document.querySelectorAll('input[type="radio"]');
 
-  // SelectSuccursale disabled by default
+  //la sélection est inactive par défaut (SelectSuccursale)
   selectSuccursale.disabled = true;
 
-  // Update results when any input changes
+  // Mettre à jour les résultats lorsqu'une entrée change
   formulaire.addEventListener("change", function () {
-    updateResults(formulaire, selectSuccursale);
+    afficherResultats(formulaire, selectSuccursale);
   });
 
-  // Handle checkbox change for succursale
+  // Gérer le changement de case à cocher pour la succursale
   checkboxSuccursale.addEventListener("change", function () {
-    handleCheckboxChange(
+    checkboxChangementClick(
       formulaire,
       checkboxSuccursale,
       selectSuccursale,
@@ -22,19 +23,21 @@ function init() {
     );
   });
 
-  // Handle radio button change for livraisonChoix
+  // Gérer le changement de case à cocher pour la livraisonChoix
   livraisonChoix.forEach(function (radio) {
     radio.addEventListener("change", function () {
-      handleRadioChange(radio);
+      radioChangementClick(radio);
     });
   });
 
-  // Initial update when page loads
-  updateResults(formulaire, selectSuccursale);
+  // Mise à jour initiale au chargement de la page
+  afficherResultats(formulaire, selectSuccursale);
 }
 
-function updateResults(formulaire, selectSuccursale) {
-  const sectionsToDisplay = [
+//la fonction qui reçoit les valeurs saisies, les traite, les valide et les affiche dans la section des résultats
+function afficherResultats(formulaire, selectSuccursale) {
+  //les noms des valeurs à traiter
+  const sectionsAAficher = [
     "nom",
     "email",
     "phone",
@@ -49,10 +52,13 @@ function updateResults(formulaire, selectSuccursale) {
     "dhl",
   ];
 
+  //section résultats:
   const resultatsSection = document.querySelector(".resultats");
+  //les balises de span dont doivent être remplies avec les valeurs nécessaires
   const spans = resultatsSection.querySelectorAll("[data-name]");
 
-  const validationRules = {
+  //règle de validation
+  const validationRegles = {
     nom: /^[a-zA-Z\s]+$/,
     email: /^\S+@\S+\.\S+$/,
     phone: /^\d{10}$/,
@@ -65,92 +71,99 @@ function updateResults(formulaire, selectSuccursale) {
   /**
   Nom: "John Doe"
   Email: "john@example.com"
-  Phone: "1234567890"
+  Tel: "1234567890"
   Adresse: "123 Main Street"
   Ville: "New York"
   Code Postal: "12345"
   Date: "2024-04-24" (YYYY-MM-DD)
   */
 
+  //par défaut, la validation est correcte
   let isValid = true;
 
   spans.forEach(function (span) {
+    //attribuer l'attribut "data-name" à la constante dataName
     const dataName = span.getAttribute("data-name");
-    if (sectionsToDisplay.includes(dataName)) {
+    //s'il y a des valeurs d'attribut de nom de données dans la table sectionsAAficher
+    if (sectionsAAficher.includes(dataName)) {
       const input = formulaire.querySelector(`[name=${dataName}]`);
       if (input) {
-        const value = input.value.trim();
-        const validationRule = validationRules[dataName];
-        if (validationRule && !validationRule.test(value)) {
-          isValid = false;
-          input.classList.add("error");
-        } else {
-          input.classList.remove("error");
+        //La valeur dans le champ
+        const value = input.value;
+        const validationRegle = validationRegles[dataName];
+        //vérifier si la valeur correspond à la règle de validation
+        // sinon, alors la classe d'erreur est ajoutée, si elle est valide, alors la classe n'est pas ajoutée
+        if (validationRegle) {
+          if (!value.match(validationRegle)) {
+            isValid = false;
+            input.classList.add("error");
+          } else {
+            input.classList.remove("error");
+          }
         }
       }
     }
   });
 
   if (isValid) {
-    // Display the results if all inputs pass validation
+    // si toutes les valeurs sont valides
     resultatsSection.style.display = "block";
   } else {
-    // Hide the results if any input fails validation
+    // /si toutes les valeurs sont invalides
     resultatsSection.style.display = "none";
   }
 }
 
-function handleCheckboxChange(
+function checkboxChangementClick(
   formulaire,
   checkbox,
   selectSuccursale,
   livraisonChoix
 ) {
+  //par default checkbox:
   const isChecked = checkbox.checked;
 
-  // Reset the selected index of the select element
+  //Réinitialiser l'index sélectionné de l'élément select
   selectSuccursale.selectedIndex = 0;
 
-  // Uncheck all the radio buttons
+  // Décochez tous les boutons radio
   livraisonChoix.forEach(function (radio) {
     radio.checked = false;
   });
 
-  // Disable or enable the select element and radio buttons based on the checkbox state
+  // Désactivez ou activez l'élément de sélection et les boutons radio en fonction de l'état de la case à cocher
   selectSuccursale.disabled = !isChecked;
   livraisonChoix.forEach(function (radio) {
     radio.disabled = isChecked;
   });
 
-  // Update results after clearing the selections
-  updateResults(formulaire, selectSuccursale);
+  // Afficher les résultats
+  afficherResultats(formulaire, selectSuccursale);
 }
 
-function handleRadioChange(radio) {
-  // Deselect all other radio buttons
+function radioChangementClick(radio) {
+  // Désélectionne tous les autres boutons radio
   const livraisonChoix = document.querySelectorAll('input[type="radio"]');
-  livraisonChoix.forEach(function (choice) {
-    if (choice !== radio) {
-      choice.checked = false;
+  livraisonChoix.forEach(function (choix) {
+    if (choix !== radio) {
+      choix.checked = false;
     }
   });
 
   const name = radio.getAttribute("data-name");
   const isChecked = radio.checked;
-  const compagnieConfirmation = document.querySelector(
-    "#compagnieConfirmationParagraph"
-  );
+  const compagnieConfirmation = document.querySelector("#compagnie_choix");
 
   if (isChecked) {
-    compagnieConfirmation.textContent = "Par: " + name; // Display the name in confirmation section
+    compagnieConfirmation.textContent = "Par: " + name; // Afficher le nom dans la section de confirmation
     compagnieConfirmation.classList.remove("invisible");
     compagnieConfirmation.classList.add("visible");
   } else {
-    compagnieConfirmation.textContent = ""; // Clear the text content
+    compagnieConfirmation.textContent = ""; // Effacer le contenu du texte
     compagnieConfirmation.classList.remove("visible");
     compagnieConfirmation.classList.add("invisible");
   }
 }
 
 // Call the init function when the DOM is loaded
-document.addEventListener("DOMContentLoaded", init);
+init();
