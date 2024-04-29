@@ -1,16 +1,17 @@
 function init() {
-  //Sélection d'éléments
+  // Sélection d'éléments
   const formulaire = document.querySelector("#formulaire-comande");
   const checkboxSuccursale = document.querySelector("#checkboxSuccursale");
   const selectSuccursale = document.querySelector("#succursale");
   const livraisonChoix = document.querySelectorAll('input[type="radio"]');
 
-  //la sélection est inactive par défaut (SelectSuccursale)
+  // La sélection est inactive par défaut (selectSuccursale)
   selectSuccursale.disabled = true;
 
   // Mettre à jour les résultats lorsqu'une entrée change
   formulaire.addEventListener("change", function () {
     afficherResultats(formulaire, selectSuccursale);
+    updateSuccursaleConfirmation(selectSuccursale);
   });
 
   // Gérer le changement de case à cocher pour la succursale
@@ -21,6 +22,7 @@ function init() {
       selectSuccursale,
       livraisonChoix
     );
+    updateSuccursaleConfirmation(selectSuccursale);
   });
 
   // Gérer le changement de case à cocher pour la livraisonChoix
@@ -32,18 +34,19 @@ function init() {
 
   // Mise à jour initiale au chargement de la page
   afficherResultats(formulaire, selectSuccursale);
+  updateSuccursaleConfirmation(selectSuccursale);
 }
 
-//la fonction qui reçoit les valeurs saisies, les traite, les valide et les affiche dans la section des résultats
+// La fonction qui reçoit les valeurs saisies, les traite, les valide et les affiche dans la section des résultats
 function afficherResultats(formulaire, selectSuccursale) {
-  //les noms des valeurs à traiter
+  // Les noms des valeurs à traiter
   const sectionsAAficher = [
     "nom",
     "email",
     "phone",
     "adresse",
     "ville",
-    "code_posatal",
+    "code_postal", // Updated attribute name
     "date",
     "livraison",
     "succursale",
@@ -52,47 +55,37 @@ function afficherResultats(formulaire, selectSuccursale) {
     "dhl",
   ];
 
-  //section résultats:
+  // Section résultats
   const resultatsSection = document.querySelector(".resultats");
-  //les balises de span dont doivent être remplies avec les valeurs nécessaires
+  // Les balises de span dont doivent être remplies avec les valeurs nécessaires
   const spans = resultatsSection.querySelectorAll("[data-name]");
 
-  //règle de validation
+  // Par défaut, la validation est correcte
+  let isValid = true;
+
+  // Règles de validation
   const validationRegles = {
     nom: /^[a-zA-Z\s]+$/,
     email: /^\S+@\S+\.\S+$/,
     phone: /^\d{10}$/,
     adresse: /\S+/,
     ville: /\S+/,
-    code_posatal: /^\d{5}$/,
+    code_postal: /^\d{5}$/, // Updated attribute name
     date: /\S+/,
   };
 
-  /**
-  Nom: "John Doe"
-  Email: "john@example.com"
-  Tel: "1234567890"
-  Adresse: "123 Main Street"
-  Ville: "New York"
-  Code Postal: "12345"
-  Date: "2024-04-24" (YYYY-MM-DD)
-  */
-
-  //par défaut, la validation est correcte
-  let isValid = true;
-
   spans.forEach(function (span) {
-    //attribuer l'attribut "data-name" à la constante dataName
+    // Attribuer l'attribut "data-name" à la constante dataName
     const dataName = span.getAttribute("data-name");
-    //s'il y a des valeurs d'attribut de nom de données dans la table sectionsAAficher
+    // S'il y a des valeurs d'attribut de nom de données dans la table sectionsAAficher
     if (sectionsAAficher.includes(dataName)) {
       const input = formulaire.querySelector(`[name=${dataName}]`);
       if (input) {
-        //La valeur dans le champ
+        // La valeur dans le champ
         const value = input.value;
-        const validationRegle = validationRegles[dataName];
-        //vérifier si la valeur correspond à la règle de validation
-        // sinon, alors la classe d'erreur est ajoutée, si elle est valide, alors la classe n'est pas ajoutée
+        const validationRegle = validationRegles[dataName]; // Règle de validation spécifique pour le champ
+        // Vérifier si la valeur correspond à la règle de validation
+        // Sinon, alors la classe d'erreur est ajoutée, si elle est valide, alors la classe n'est pas ajoutée
         if (validationRegle) {
           if (!value.match(validationRegle)) {
             isValid = false;
@@ -101,15 +94,17 @@ function afficherResultats(formulaire, selectSuccursale) {
             input.classList.remove("error");
           }
         }
+        // Mettre à jour le contenu du span correspondant avec la valeur du champ
+        span.textContent = value;
       }
     }
   });
 
   if (isValid) {
-    // si toutes les valeurs sont valides
+    // Si toutes les valeurs sont valides
     resultatsSection.style.display = "block";
   } else {
-    // /si toutes les valeurs sont invalides
+    // Si toutes les valeurs sont invalides
     resultatsSection.style.display = "none";
   }
 }
@@ -120,10 +115,10 @@ function checkboxChangementClick(
   selectSuccursale,
   livraisonChoix
 ) {
-  //par default checkbox:
+  // Par défaut checkbox
   const isChecked = checkbox.checked;
 
-  //Réinitialiser l'index sélectionné de l'élément select
+  // Réinitialiser l'index sélectionné de l'élément select
   selectSuccursale.selectedIndex = 0;
 
   // Décochez tous les boutons radio
@@ -165,5 +160,17 @@ function radioChangementClick(radio) {
   }
 }
 
-// Call the init function when the DOM is loaded
+// Fonction pour mettre à jour la confirmation de succursale
+function updateSuccursaleConfirmation(selectElement) {
+  const selectedOption =
+    selectElement.options[selectElement.selectedIndex].text;
+  const succursaleConfirmation = document.querySelector(
+    "[data-name='succursale']"
+  );
+
+  // Mettre à jour le contenu du span de confirmation de succursale
+  succursaleConfirmation.textContent = selectedOption;
+}
+
+// Call
 init();
