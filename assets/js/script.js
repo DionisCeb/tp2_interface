@@ -37,74 +37,53 @@ function init() {
   updateSuccursaleConfirmation(selectSuccursale);
 }
 
-// La fonction qui reçoit les valeurs saisies, les traite, les valide et les affiche dans la section des résultats
-function afficherResultats(formulaire, selectSuccursale) {
-  // Les noms des valeurs à traiter
-  const sectionsAAficher = [
-    "nom",
-    "email",
-    "phone",
-    "adresse",
-    "ville",
-    "code_postal", // Updated attribute name
-    "date",
-    "livraison",
-    "succursale",
-    "canadapost",
-    "fedex",
-    "dhl",
-  ];
+/// Regles de la validation:
+function validateInput(inputName, value) {
+  switch (inputName) {
+    case "nom":
+      return /^[a-zA-Z\s]+$/.test(value);
+    case "email":
+      return /^\S+@\S+\.\S+$/.test(value);
+    case "phone":
+      return /^\d{10}$/.test(value);
+    case "adresse":
+      return /^\d{1,6}(?:\s[A-Za-z]+){0,3}$/.test(value);
+    case "ville":
+      return /^[A-Za-z]+$/.test(value);
+    case "code_postal":
+      return /^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/.test(value);
+    default:
+      return true;
+  }
+}
 
-  // Section résultats
+// Affichage des resultats:
+function afficherResultats(formulaire, selectSuccursale) {
   const resultatsSection = document.querySelector(".resultats");
-  // Les balises de span dont doivent être remplies avec les valeurs nécessaires
   const spans = resultatsSection.querySelectorAll("[data-name]");
 
-  // Par défaut, la validation est correcte
+  // Validation par default
   let isValid = true;
 
-  // Règles de validation
-  const validationRegles = {
-    nom: /^[a-zA-Z\s]+$/,
-    email: /^\S+@\S+\.\S+$/,
-    phone: /^\d{10}$/,
-    adresse: /\S+/,
-    ville: /\S+/,
-    code_postal: /^\d{5}$/, // Updated attribute name
-    date: /\S+/,
-  };
-
   spans.forEach(function (span) {
-    // Attribuer l'attribut "data-name" à la constante dataName
     const dataName = span.getAttribute("data-name");
-    // S'il y a des valeurs d'attribut de nom de données dans la table sectionsAAficher
-    if (sectionsAAficher.includes(dataName)) {
-      const input = formulaire.querySelector(`[name=${dataName}]`);
-      if (input) {
-        // La valeur dans le champ
-        const value = input.value;
-        const validationRegle = validationRegles[dataName]; // Règle de validation spécifique pour le champ
-        // Vérifier si la valeur correspond à la règle de validation
-        // Sinon, alors la classe d'erreur est ajoutée, si elle est valide, alors la classe n'est pas ajoutée
-        if (validationRegle) {
-          if (!value.match(validationRegle)) {
-            isValid = false;
-            input.classList.add("error");
-          } else {
-            input.classList.remove("error");
-          }
-        }
-        // Mettre à jour le contenu du span correspondant avec la valeur du champ
-        span.textContent = value;
+    const input = formulaire.querySelector(`[name=${dataName}]`);
+    if (input) {
+      const value = input.value;
+      const isValidValue = validateInput(dataName, value);
+      span.textContent = value;
+      if (!isValidValue) {
+        isValid = false;
+        input.classList.add("error");
+      } else {
+        input.classList.remove("error");
       }
     }
   });
 
   if (isValid) {
-    // Si toutes les valeurs sont valides
     resultatsSection.style.display = "block";
   } else {
-    // Si toutes les valeurs sont invalides
     resultatsSection.style.display = "none";
   }
 }
@@ -161,6 +140,7 @@ function radioChangementClick(radio) {
 }
 
 // Fonction pour mettre à jour la confirmation de succursale
+// Fonction de mise à jour de la confirmation de succursale
 function updateSuccursaleConfirmation(selectElement) {
   const selectedOption =
     selectElement.options[selectElement.selectedIndex].text;
@@ -168,9 +148,17 @@ function updateSuccursaleConfirmation(selectElement) {
     "[data-name='succursale']"
   );
 
-  // Mettre à jour le contenu du span de confirmation de succursale
+  // Mettre à jour le contenu du <span> de confirmation de succursale
   succursaleConfirmation.textContent = selectedOption;
+
+  // Afficher ou masquer succursale_choix selon qu'une valeur est sélectionnée ou non
+  const succursaleChoixText = document.querySelector("#succursale_choix");
+  if (selectedOption !== "Sélectionner un magasin") {
+    succursaleChoixText.style.display = "block";
+  } else {
+    succursaleChoixText.style.display = "none";
+  }
 }
 
-// Call
+// Appel de la fonction init:
 init();
