@@ -1,9 +1,44 @@
+function avancerSection() {
+  const sections = document.querySelectorAll("section");
+  const currentSection = document.querySelector(".active-section");
+  const currentIndex = Array.from(sections).indexOf(currentSection);
+
+  if (currentIndex < sections.length - 1) {
+    currentSection.classList.remove("active-section");
+    sections[currentIndex + 1].classList.add("active-section");
+  }
+}
+
+function reculerSection() {
+  const sections = document.querySelectorAll("section");
+  const currentSection = document.querySelector(".active-section");
+  const currentIndex = Array.from(sections).indexOf(currentSection);
+
+  if (currentIndex > 0) {
+    currentSection.classList.remove("active-section");
+    sections[currentIndex - 1].classList.add("active-section");
+  }
+}
+
 function init() {
   // Sélection d'éléments
   const formulaire = document.querySelector("#formulaire-comande");
   const checkboxSuccursale = document.querySelector("#checkboxSuccursale");
   const selectSuccursale = document.querySelector("#succursale");
   const livraisonChoix = document.querySelectorAll('input[type="radio"]');
+  const boutons = document.querySelectorAll("button[data-direction]");
+
+  //les boutons:
+  boutons.forEach(function (bouton) {
+    bouton.addEventListener("click", function () {
+      const direction = parseInt(bouton.dataset.direction);
+      if (direction > 0) {
+        avancerSection();
+      } else {
+        reculerSection();
+      }
+    });
+  });
 
   // La sélection est inactive par défaut (selectSuccursale)
   selectSuccursale.disabled = true;
@@ -47,11 +82,11 @@ function validateInput(inputName, value) {
     case "phone":
       return /^\d{10}$/.test(value);
     case "adresse":
-      return /^\d{1,6}(?:\s[A-Za-z]+){0,3}$/.test(value);
+      return /^[a-zA-Z\s]+$/.test(value);
     case "ville":
-      return /^[A-Za-z]+$/.test(value);
+      return /^[a-zA-Z\s]+$/.test(value);
     case "code_postal":
-      return /^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/.test(value);
+      return /^[a-zA-Z\s]+$/.test(value);
     default:
       return true;
   }
@@ -81,11 +116,15 @@ function afficherResultats(formulaire, selectSuccursale) {
     }
   });
 
+  const lastSection = document.querySelector("section:last-of-type");
+  /* 
   if (isValid) {
-    resultatsSection.style.display = "block";
+    resultatsSection.classList.add("active-section");
+    lastSection.classList.add("active-section");
   } else {
-    resultatsSection.style.display = "none";
-  }
+    resultatsSection.classList.remove("active-section");
+    lastSection.classList.remove("active-section");
+  } */
 }
 
 function checkboxChangementClick(

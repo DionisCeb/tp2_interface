@@ -43,6 +43,16 @@
 }
 
 
+/*Les sections en tant que l'etape*/
+section {
+    display: none;
+  }
+  
+  /* Display the section with active-section class */
+  .active-section {
+    display: block;
+  }
+  
 
 /*Label*/
 
