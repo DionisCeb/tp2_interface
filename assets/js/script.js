@@ -2,8 +2,22 @@ function avancerSection() {
   const sections = document.querySelectorAll("section");
   const currentSection = document.querySelector(".active-section");
   const currentIndex = Array.from(sections).indexOf(currentSection);
+  let inputsAreValid = true;
 
-  if (currentIndex < sections.length - 1) {
+  // Validate all inputs in the current section
+  currentSection.querySelectorAll("input").forEach((input) => {
+    const inputName = input.getAttribute("name");
+    const inputValue = input.value;
+    if (!validateInput(inputName, inputValue)) {
+      inputsAreValid = false;
+      input.classList.add("error");
+    } else {
+      input.classList.remove("error");
+    }
+  });
+
+  // If all inputs are valid, proceed to the next section
+  if (inputsAreValid && currentIndex < sections.length - 1) {
     currentSection.classList.remove("active-section");
     sections[currentIndex + 1].classList.add("active-section");
   }
@@ -76,17 +90,34 @@ function init() {
 function validateInput(inputName, value) {
   switch (inputName) {
     case "nom":
-      return /^[a-zA-Z\s]+$/.test(value);
+      return /^[A-Z][a-z]+\s[A-Z][a-z]+$/.test(value);
     case "email":
       return /^\S+@\S+\.\S+$/.test(value);
     case "phone":
-      return /^\d{10}$/.test(value);
+      return /^\+\d{1,3}(?:\s?\d{3}){3}$/.test(value);
     case "adresse":
-      return /^[a-zA-Z\s]+$/.test(value);
+      return /^\d{1,6}\s(?:[A-Za-z]+(?:-[A-Za-z]+)?\s?){1,5}[A-Za-z]+$/.test(
+        value
+      );
     case "ville":
-      return /^[a-zA-Z\s]+$/.test(value);
+      return /^[A-Z][a-z]+(?:-[A-Z][a-z]+)?(?:\s[A-Z][a-z]+(?:-[A-Z][a-z]+)?){0,3}$/.test(
+        value
+      );
     case "code_postal":
-      return /^[a-zA-Z\s]+$/.test(value);
+      return /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(value);
+    case "date":
+      return /^(2024)-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(value);
+    case "carte_nom":
+      return /^[A-Z][a-z]+\s[A-Z][a-z]+$/.test(value);
+    case "carte_nombre":
+      return /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})$/.test(
+        value
+      );
+    case "carte_expiration":
+      return /^((0[5-9])|(1[0-2]))\/((2[4-9])|(3[0-5]))$/.test(value);
+    case "card_cvc":
+      return /^\d{3,4}$/.test(value);
+
     default:
       return true;
   }
@@ -96,9 +127,7 @@ function validateInput(inputName, value) {
 function afficherResultats(formulaire, selectSuccursale) {
   const resultatsSection = document.querySelector(".resultats");
   const spans = resultatsSection.querySelectorAll("[data-name]");
-
-  // Validation par default
-  let isValid = true;
+  let isValid = true; // Track overall validity of all sections
 
   spans.forEach(function (span) {
     const dataName = span.getAttribute("data-name");
@@ -108,7 +137,7 @@ function afficherResultats(formulaire, selectSuccursale) {
       const isValidValue = validateInput(dataName, value);
       span.textContent = value;
       if (!isValidValue) {
-        isValid = false;
+        isValid = false; // If any input is invalid, set isValid to false
         input.classList.add("error");
       } else {
         input.classList.remove("error");
@@ -116,15 +145,7 @@ function afficherResultats(formulaire, selectSuccursale) {
     }
   });
 
-  const lastSection = document.querySelector("section:last-of-type");
-  /* 
-  if (isValid) {
-    resultatsSection.classList.add("active-section");
-    lastSection.classList.add("active-section");
-  } else {
-    resultatsSection.classList.remove("active-section");
-    lastSection.classList.remove("active-section");
-  } */
+  // Apply or remove "active-section" class based on overall validity
 }
 
 function checkboxChangementClick(
