@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validation de l'achat</title>
     <link rel="stylesheet" href="assets/styles/style.css">
-    <script src="assets/js/script.js" defer></script>
-    <!-- <script src="assets/js/formulaire_1" defer></script> -->
+    
+    <script src="assets/js/validationRegles.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
 </head>
 <body>
     <div class="page-achat">
@@ -20,11 +21,11 @@
                             <div class="personal">
                                 <div>
                                     <label for="nom">Nom complet <span>*</span></label>
-                                    <input type="text" name="nom" data-name="nom" placeholder="exemple: 'Alex Ban'">
+                                    <input type="text" name="nom" data-name="nom" placeholder="exemple: 'Nom Prenom'">
                                 </div>
                                 <div>
                                     <label for="email">Courriel <span>*</span></label>
-                                    <input type="email" name="email" data-name="email" placeholder="exemple: 'alex.ban@gmail.com'">
+                                    <input type="email" name="email" data-name="email" placeholder="exemple: 'nom.prenom@gmail.com'">
                                 </div>
                                 <div>
                                     <label for="telephone">Numero de telephone <span>*</span></label>
@@ -56,12 +57,12 @@
                         <div class="livraison">
                             <div>
                                 <label for="date">Date <span>*</span></label>
-                                <input type="text" name="date" placeholder="exemple: 'AAAA-MM-JJ'">
+                                <input type="date" name="date" placeholder="exemple: 'AAAA-MM-JJ'" onfocus="this.min=new Date().toISOString().split('T')[0]">
                             </div>
                             <div>
                                 <label for="magasin">Livraison en magasin</label>
                                 <div class="choix_magasin">
-                                    <input type="checkbox" id="checkboxSuccursale">
+                                    <input type="checkbox" id="checkboxSuccursale" name="checkboxSuccursale" value="1">
                                     <label for="checkboxSuccursale">Livraison en magasin</label>
                                     <select name="succursale" id="succursale">
                                         <option value="">Sélectionner un magasin</option>
@@ -73,15 +74,15 @@
                                 <label for="service_livraison">Service de livraison</label>
                                 <div class="choix_livraison">
                                     <div>
-                                        <input type="radio" data-name="Poste Canada" value="Poste Canada">
+                                        <input type="radio" name="serviceLivraison" data-name="Poste Canada" value="Poste Canada" checked="checked">
                                         <label for="poste_ca">Poste Canada</label>
                                     </div>
                                     <div>
-                                        <input type="radio" data-name="FedEx" value="FedEx">
+                                        <input type="radio" name="serviceLivraison" data-name="FedEx" value="FedEx">
                                         <label for="fedex">FedEx</label>
                                     </div>
                                     <div>
-                                        <input type="radio" data-name="DHL" value="DHL">
+                                        <input type="radio" name="serviceLivraison" data-name="DHL" value="DHL">
                                         <label for="dhl">DHL</label>
                                     </div>
                                 </div>          
@@ -98,21 +99,21 @@
                         <div class="paiements">
                             <div class="nom_nombre">
                                 <div>
-                                    <label for="carte_nom">Le nom complet sur la carte <span>*</span></label>
-                                    <input type="text" name="carte_nom" placeholder="exemple: 'Alex Ban'">
+                                    <label for="carte_nom">Le nom complet sur la carte&nbsp;<span>*</span></label>
+                                    <input type="text" name="carte_nom" placeholder="exemple: 'Nom Prenom'">
                                 </div>
                                 <div>
-                                    <label for="carte_nombre">Numéro de Carte <span>*</span></label>
+                                    <label for="carte_nombre">Numéro de Carte&nbsp;<span>*</span></label>
                                     <input type="text" name="carte_nombre" placeholder="5105105105105100">
                                 </div>
                             </div>
                             <div class="expiration_cvc">
                                 <div>
-                                    <label for="carte_expiration">Date d'expiration <span>*</span></label>
+                                    <label for="carte_expiration">Date d'expiration&nbsp;<span>*</span></label>
                                     <input type="text" name="carte_expiration" placeholder="MM/AA">
                                 </div>
                                 <div>
-                                    <label for="card_cvc">Code de sécurité <span>*</span></label>
+                                    <label for="card_cvc">Code de sécurité&nbsp;<span>*</span></label>
                                     <input type="text" name="card_cvc" placeholder="123">
                                 </div>
                             </div>
@@ -128,31 +129,28 @@
                         <div class="confirmation">
                             <div>
                                 <h1>Informations personnelles</h1>
-                                <p>Nom: <span data-name="nom"></span></p>
-                                <p>E-mail: <span data-name="email"></span></p>
-                                <p>Telephone: <span data-name="phone"></span></p>
+                                <p>Nom:&nbsp;<span data-name="nom"></span></p>
+                                <p>E-mail:&nbsp;<span data-name="email"></span></p>
+                                <p>Telephone:&nbsp;<span data-name="phone"></span></p>
                                  
                             </div>
 
                             <div>
                                 <h1>Adresse</h1>
-                                <p>Adresse: <span data-name="adresse"></span></p>
-                                <p>Ville: <span data-name="ville"></span></p>
-                                <p>Code Postale: <span data-name="code_postal"></span></p>
+                                <p>Adresse:&nbsp;<span data-name="adresse"></span></p>
+                                <p>Ville:&nbsp;<span data-name="ville"></span></p>
+                                <p>Code Postale:&nbsp;<span data-name="code_postal"></span></p>
                             </div>
 
                             <div>
                                 <h1>Livraison</h1>
-                                <p id="dateParagraph">Date: <span data-name="date"></span></p>
-                                <p id="succursale_choix">Le produit est prêt à être récupéré au magasin de: <span data-name="succursale"></span></p>
-                                <p id="compagnie_choix"> <span data-name="compagnie_confirmation"></span></p>
+                                <p id="dateParagraph">Date:&nbsp;<span data-name="date"></span></p>
+                                <p id="livraison_choix">&nbsp;<span></span></p>
+                                <p id="succursale_choix">&nbsp;<span data-name="succursale"></span></p>
+                                <!-- <p id="compagnie_choix">&nbsp;<span data-name="compagnie_confirmation"></span></p> -->
                               </div>
                               
                         </div>
-                        <!-- <div class="footer_form">
-                            <button type="button" data-direction="-1" class="precedent">Precedent</button>
-                            <button type="button" data-direction="1" class="continuer">Continuer</button>
-                        </div> -->
                     </section>
                 </form>
             </div>
